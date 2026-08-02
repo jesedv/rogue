@@ -1,0 +1,16 @@
+{
+  "name": "rogue-wasm",
+  "description": "WASM bindings for the rogue NLS predictor",
+  "version": "0.1.0",
+  "license": "MIT",
+  "files": [
+    "rogue_wasm_bg.wasm",
+    "rogue_wasm.js",
+    "rogue_wasm.d.ts"
+  ],
+  "module": "rogue_wasm.js",
+  "types": "rogue_wasm.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

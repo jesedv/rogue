@@ -5,7 +5,9 @@
 node_modules/
 education/node_modules/
 education/dist/
-education/pkg/
+
+# Pre-built WASM is committed so Cloudflare Pages doesn't need Rust
+# education/pkg/  (un-ignored — shipped for deploy)
 
 # wasm-pack artifacts
 pkg/
