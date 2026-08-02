@@ -7,20 +7,6 @@ export default defineConfig({
   server: {
     port: 5173,
     fs: { allow: [".."] },
-    configureServer(server) {
-      server.middlewares.use((req, _res, next) => {
-        if (req.url! === "/education" || req.url!.startsWith("/education/")) {
-          req.url = "/education.html";
-        } else if (req.url! === "/production" || req.url!.startsWith("/production/")) {
-          req.url = "/production.html";
-        } else if (req.url! === "/docs" || req.url!.startsWith("/docs/")) {
-          req.url = "/docs.html";
-        } else if (req.url! === "/") {
-          req.url = "/index.html";
-        }
-        next();
-      });
-    },
   },
   optimizeDeps: {
     exclude: ["rogue-wasm"],
