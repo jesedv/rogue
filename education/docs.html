@@ -192,23 +192,43 @@ Steepness:         2A k₀
       </ul>
 
       <h2 id="instruments">Connecting instruments</h2>
-      <p>Any system that produces sea-state data can feed Rogue:</p>
+      <p>Any system that produces sea-state data can feed Rogue — wave buoys, shipboard radars, coastal stations, or a helmsman typing observations. All that matters is <code>t, hs, tp</code>.</p>
+
+      <h3>Supported instrument types</h3>
+      <table>
+        <tr><th>Instrument</th><th>Data format</th><th>How to pipe in</th></tr>
+        <tr><td>Wave buoys (Datawell, Spotter, TRIAXYS)</td><td>Hs, Tp, Tz via serial/NMEA/satellite</td><td>Write a CSV row each cycle, feed to <code>rogue predict</code></td></tr>
+        <tr><td>Shipboard X-band radar</td><td>2D wave spectrum → Hs, Tp</td><td>Bridge system exports CSV, watched by a <code>watch</code> loop</td></tr>
+        <tr><td>Coastal ADCP / AWAC</td><td>Hs, Tp from pressure+velocity</td><td>Coastal station runs cron job</td></tr>
+        <tr><td>Drifting buoys (SVP, Argo)</td><td>S-AIS / Iridium messages with Hs</td><td>Feed decoder writes to a rolling CSV file</td></tr>
+        <tr><td>Manual observation</td><td>Helmsman or watch-keeper entering Hs, Tp</td><td>Directly into <a href="/production">/production</a> web form</td></tr>
+      </table>
 
       <h3>Streaming feed</h3>
       <pre><code># Buoy / AIS / bridge writes observations to a rolling CSV
-echo "0,4.0,11.0,3.3" > /var/feed/current.csv
-rogue predict /var/feed/current.csv --json >> /var/log/rogue-alerts.json</code></pre>
+echo "0,4.0,11.0,3.3" &gt; /var/feed/current.csv
+rogue predict /var/feed/current.csv --json &gt;&gt; /var/log/rogue-alerts.json</code></pre>
 
       <h3>Loop / cron</h3>
-      <pre><code># Poll every 60 seconds — good for buoys, met stations
+      <pre><code># Poll every 60 seconds — good for buoys and met stations
 watch -n 60 'rogue predict /dev/stdin --json &lt; /var/feed/current.csv'</code></pre>
 
-      <h3>WebSocket bridge (advanced)</h3>
-      <pre><code># Pipe streaming data through a lightweight WS server
-socat TCP-LISTEN:8080,fork EXEC:'./rogue predict --json /dev/stdin'</code></pre>
+      <h3>systemd timer (production-grade)</h3>
+      <pre><code>[Unit]
+Description=Rogue rogue-wave forecast
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/rogue predict /var/feed/current.csv --json
+
+[Install]
+WantedBy=timers.target</code></pre>
+
+      <h3>WebSocket bridge</h3>
+      <pre><code>socat TCP-LISTEN:8080,fork EXEC:'./rogue predict --json /dev/stdin'</code></pre>
 
       <h3>Audit replay</h3>
-      <p>Because Rogue is deterministic and seeded, replaying historical AIS / buoy logs produces <strong>identical</strong> alerts — critical for insurance, incident review, and regulatory compliance.</p>
+      <p>Rogue is deterministic and seeded — replaying historical AIS / S-AIS logs produces <strong>identical</strong> alerts. Critical for post-voyage review, insurance claims, port-state inspections, and regulatory compliance (SOLAS, MARPOL).</p>
 
       <h2 id="web">Web dashboard</h2>
       <h3>Education mode</h3>

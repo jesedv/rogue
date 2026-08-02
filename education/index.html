@@ -264,12 +264,24 @@
     <section id="instruments">
       <div class="wrap">
         <h2>Connect your instruments</h2>
-        <p class="sec-sub">Real-time prediction on a buoy, vessel or ashore — a guard, tug or bridge can feed the solver live.</p>
+        <p class="sec-sub">Live feed from a buoy, bridge, coastal station or vessel — the solver runs where the data is.</p>
         <div class="cols">
-          <div class="tile"><h4>1 · Stream a feed</h4><p>Point an instrument or bridge system at the CLI: each window writes a CSV row <code>t,hs,tp</code>. The solver forecasts ahead and flags rogue risk.</p></div>
-          <div class="tile"><h4>2 · Predict continuously</h4><p>Run <code>rogue predict &lt;stream&gt; --json</code> on a loop or cron. Output is clean JSON events — easy to wire into a helmsman alarm or routing aid.</p></div>
-          <div class="tile"><h4>3 · Bridge on the web</h4><p>The same forecast runs in-browser on <a href="/production" class="gold-text">/production</a> — no software install on the vessel.</p></div>
-          <div class="tile"><h4>4 · Reproducible</h4><p>Fixed seeds and deterministic integrations mean an AIS / log replay produces identical alerts for audit.</p></div>
+          <div class="tile">
+            <h4>1 · Pipe in your feed</h4>
+            <p>Any instrument that outputs <code>t, hs, tp</code> works — wave buoys (Datawell, Spotter, TRIAXYS), shipboard X-band radars, coastal ADCP stations, drifting Waveriders, or a helmsman typing observations. CSV over serial, NMEA log, HTTP POST, or a plain file — Rogue reads all these.</p>
+          </div>
+          <div class="tile">
+            <h4>2 · Forecast continuously</h4>
+            <p>Run <code>rogue predict /dev/stdin --json</code> in a <code>watch</code> loop or systemd timer. Every new row is a physical, dimensionality-correct forecast. JSON output drops straight into an alarm, a bridge display, or a routing-aid panel — no middleware.</p>
+          </div>
+          <div class="tile">
+            <h4>3 · Run on the web, anywhere</h4>
+            <p>No install on the vessel — the same WASM forecast engine lives at <a href="/production" class="gold-text">/production</a>. A captain, a tug operator, or a coast-guard watch can enter a sea state in a browser and get a forecast in under a second.</p>
+          </div>
+          <div class="tile">
+            <h4>4 · Reproducible audit trail</h4>
+            <p>Deterministic and seeded — replay a 12-hour AIS / S-AIS log and Rogue produces <strong>identical</strong> alerts. Critical for post-voyage review, insurance claims, port-state inspections, and regulatory compliance (SOLAS, MARPOL).</p>
+          </div>
         </div>
       </div>
     </section>
