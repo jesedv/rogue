@@ -250,3 +250,42 @@ fn rogue_turbulence_kurtosis(amp: &[f64]) -> f64 {
 pub fn version() -> String {
     env!("CARGO_PKG_VERSION").to_string()
 }
+
+// ----- production bridge (real sea-state -> physical forecast) -----
+
+#[wasm_bindgen]
+pub fn sea_scale(hs: f64, tp: f64, gamma: f64) -> JsValue {
+    let sea = rogue_production::SeaState { hs, tp, gamma };
+    serde_wasm_bindgen::to_value(&SeaScale {
+        k0: sea.k0(),
+        wavelength_m: sea.wavelength(),
+        beta: sea.beta(),
+        gamma_c: sea.gamma_c(),
+        steepness: sea.steepness(),
+    })
+    .unwrap_or(JsValue::NULL)
+}
+
+#[derive(Serialize)]
+struct SeaScale {
+    k0: f64,
+    wavelength_m: f64,
+    beta: f64,
+    gamma_c: f64,
+    steepness: f64,
+}
+
+/// Run the physical production forecast for a (hs, tp) pair in the browser.
+/// Returns the JSON-serializable [`ObservationForecast`] struct.
+pub fn production_forecast_js(hs: f64, tp: f64, gamma: f64, seed: u32) -> JsValue {
+    use rogue_production::{ForecastConfig, Observation};
+    let obs = Observation { t: 0.0, hs, tp, gamma };
+    let cfg = ForecastConfig::default();
+    let f = rogue_production::forecast_observation(&obs, &cfg, seed as u64);
+    serde_wasm_bindgen::to_value(&f).unwrap_or(JsValue::NULL)
+}
+
+#[wasm_bindgen]
+pub fn production_forecast(hs: f64, tp: f64, gamma: f64, seed: u32) -> JsValue {
+    production_forecast_js(hs, tp, gamma, seed)
+}

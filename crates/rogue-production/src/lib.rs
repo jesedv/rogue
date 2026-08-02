@@ -14,6 +14,9 @@ pub mod forecast;
 pub mod io;
 pub mod sea;
 
-pub use forecast::{forecast_observations, ForecastConfig, ForecastReport};
+pub use forecast::{
+    forecast_observation, forecast_observations, forecast_sea_state, ForecastConfig,
+    ForecastEvent, ForecastReport, ObservationForecast, RiskLevel,
+};
 pub use io::{parse_observations, Observation};
 pub use sea::SeaState;

@@ -12,6 +12,7 @@ crate-type = ["cdylib", "rlib"]
 rogue-nls.workspace = true
 rogue-blow-up.workspace = true
 rogue-rogue.workspace = true
+rogue-production.workspace = true
 serde.workspace = true
 serde-wasm-bindgen = "0.6"
 wasm-bindgen.workspace = true

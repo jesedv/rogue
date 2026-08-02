@@ -30,6 +30,7 @@ rogue-plasma = { path = "crates/rogue-plasma" }
 rogue-fiber = { path = "crates/rogue-fiber" }
 rogue-turbulence = { path = "crates/rogue-turbulence" }
 rogue-wasm = { path = "crates/rogue-wasm" }
+rogue-production = { path = "crates/rogue-production" }
 num-complex = { version = "0.4", features = ["serde"] }
 rustfft = "6"
 serde = { version = "1", features = ["derive"] }

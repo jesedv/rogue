@@ -385,6 +385,7 @@ dependencies = [
  "js-sys",
  "rogue-blow-up",
  "rogue-nls",
+ "rogue-production",
  "rogue-rogue",
  "serde",
  "serde-wasm-bindgen",

@@ -11,4 +11,12 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ["rogue-wasm"],
   },
+  build: {
+    rollupOptions: {
+      input: {
+        index: new URL("./index.html", import.meta.url).pathname,
+        production: new URL("./production.html", import.meta.url).pathname,
+      },
+    },
+  },
 });
