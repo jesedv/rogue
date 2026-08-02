@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rogue.jesed.dev/sitemap.xml

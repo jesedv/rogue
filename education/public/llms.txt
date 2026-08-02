@@ -1,0 +1,22 @@
+# Rogue — finite-time blow-up & rogue-wave predictor
+
+> Real-time physics-based extreme-wave forecast. Ocean, aerospace, plasma, fiber-optics.
+
+## Pages
+
+- [Home](https://rogue.jesed.dev/): Project overview, why it exists, how to use, parameters, CLI instructions, instrument connections.
+- [Education](https://rogue.jesed.dev/education): Interactive NLS simulation dashboard — Akhmediev breathers, Peregrine solitons, JONSWAP random seas, quintic blow-up.
+- [Production](https://rogue.jesed.dev/production): Real sea-state input → physical NLS forecast. Rogue-wave detection from Hs, Tp, γ.
+- [Docs](https://rogue.jesed.dev/docs): Full documentation — mathematics, architecture, CLI usage, production mode, instrument connections, web dashboard, download, contributing.
+
+## Quick facts
+
+- Built on Merle–Raphael–Rodnianski–Szeftel (2026) finite-time blow-up in supercritical defocusing NLS.
+- Symplectic Strang split-step solver. Deterministic, seeded, reproducible.
+- Rust core (9 crates) + WASM browser runtime (262 kB gzipped ~98 kB).
+- MIT license. Free software. Source: https://github.com/jesedv/rogue
+- Author: https://jesed.dev
+
+## Optional
+
+- [llms-full.txt](https://rogue.jesed.dev/llms-full.txt): Full content dump of all pages.

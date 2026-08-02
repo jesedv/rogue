@@ -1,0 +1,449 @@
+# Rogue — full site content
+
+## Home
+
+    Rogue — forecast extreme wave events
+      :root {
+        color-scheme: light;
+        --bg: #eef7f6;
+        --white: #ffffff;
+        --ocean-900: #062a2b;
+        --ocean-700: #0d4a4a;
+        --ocean-500: #1f7a72;
+--green: #1f9d68;
+      --green-400: #27c48a;
+      --gold: #d9a832;
+        --text: #173b3b;
+        --muted: #5b7a7a;
+        --line-c: #d7e7e5;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 16px/1.65 "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+      .wrap { max-width: 920px; margin: 0 auto; padding: 0 22px; }
+      header.hero {
+        background: linear-gradient(160deg, #062a2b 0%, #0a3f3f 55%, #145a52 100%);
+        color: #eaf7f3;
+        padding: 72px 0 56px;
+      header.hero .mast { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+      .brand { font-size: 30px; font-weight: 700; letter-spacing: .06em; color: var(--white); }
+      .brand span { color: var(--green-400); }
+      .tag { font-size: 13px; letter-spacing: .04em; color: #bcdcd6; }
+      .hero h1 { font-size: 42px; line-height: 1.1; margin: 34px 0 14px; color: var(--white); }
+      .hero h1 em { font-style: normal; color: var(--green-400); }
+      .hero p.lead { font-size: 19px; max-width: 640px; color: #cfe8e3; margin: 0 0 30px; }
+      .cta { display: flex; flex-wrap: wrap; gap: 14px; }
+      .btn {
+        display: inline-block; text-decoration: none; font-weight: 700;
+        padding: 13px 22px; border-radius: 10px; font-size: 15px;
+        border: 1px solid transparent; cursor: pointer;
+      .btn.green { background: linear-gradient(180deg, #27c48a, #15955f); color: #fff; }
+      .btn.gold { background: transparent; border-color: rgba(217,168,64,.55); color: #f4ddb0; }
+      .btn.ghost { background: var(--white); color: var(--ocean-900); border-color: var(--line-c); }
+      section { padding: 44px 0; }
+      nav.menu {
+        margin-top: 40px; display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;
+      .menu-card {
+        background: var(--white); border: 1px solid var(--line-c); border-radius: 14px;
+        padding: 22px 24px; text-decoration: none; color: var(--text);
+        transition: transform .05s ease, border-color .15s ease;
+      .menu-card:hover { border-color: var(--green-400); transform: translateY(-2px); }
+      .menu-card h3 { margin: 0 0 6px; font-size: 19px; }
+      .menu-card .go { color: var(--green-400); font-weight: 700; }
+      .badge { display:inline-block; font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+        padding:2px 8px; border-radius:999px; font-weight:700; margin-bottom:10px; }
+      .badge.edu { background:#e2f4ea; color:#1f7a3c; }
+      .badge.pro { background:#f7ead2; color:#9a6a10; }
+      h2 {
+        font-size: 26px; color: var(--ocean-900); margin: 0 0 8px;
+        display: flex; align-items: center; gap: 12px;
+      h2::before { content: ""; width: 8px; height: 26px; border-radius: 4px; background: linear-gradient(var(--green-400), var(--ocean-500)); }
+      .sec-sub { color: var(--muted); margin: 0 0 24px; font-size: 14px; }
+      .muted { color: var(--muted); }
+      .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+      .tile { background: var(--white); border: 1px solid var(--line-c); border-radius: 12px; padding: 18px; }
+      .tile h4 { margin: 0 0 6px; color: var(--ocean-700); }
+      .tile p { margin: 0; font-size: 14px; color: var(--muted); }
+      .why { background: var(--white); border: 1px solid var(--line-c); border-left: 5px solid var(--green-400); border-radius: 12px; padding: 20px 24px; margin: 12px 0; }
+      .why strong { color: var(--ocean-700); }
+      .params table { width: 100%; border-collapse: collapse; background: var(--white); border: 1px solid var(--line-c); border-radius: 12px; overflow: hidden; font-size: 15px; }
+      .params th, .params td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line-c); vertical-align: top; }
+      .params th { background: #1c5450; color: #eafbf3; font-size: 13px; letter-spacing: .05em; text-transform: uppercase; }
+      .params tr:last-child td { border-bottom: none; }
+      .params td code { background: #e5f1ee; color: var(--ocean-700); padding: 2px 7px; border-radius: 6px; font-size: 13px; }
+      .params td p { margin: 0; }
+      ol.steps { counter-reset: s; list-style: none; padding: 0; }
+      ol.steps li { counter-increment: s; position: relative; padding: 0 0 16px 46px; }
+      ol.steps li::before {
+        content: counter(s); position: absolute; left: 0; top: 0;
+        width: 32px; height: 32px; border-radius: 50%;
+        background: linear-gradient(var(--green-400), var(--ocean-500)); color: #fff;
+        font-weight: 700; display: flex; align-items: center; justify-content: center;
+      ol.steps b { color: var(--ocean-900); }
+      footer { border-top: 1px solid var(--line-c); background: var(--white); padding: 26px 0; color: var(--muted); font-size: 13px; }
+      footer .muted { margin: 2px 0; }
+      .gold-text { color: var(--gold); font-weight: 700; }
+          ROGUE.
+          finite-time blow-up & rogue-wave predictor
+        Forecast the wavethat appears from nowhere.
+          Rogue waves are extreme ocean events — 2.2× or more the surrounding
+          wave height — that build without warning and vanish without a trace.
+          We detect them in real time from the mathematics of finite-time
+          blow-up in supercritical defocusing, using a symplectic
+          nonlinear-Schrödinger solver instead of heuristics.
+          Explore the physics
+          Try a real sea forecast
+        Choose your window
+        Two interfaces + full docs, one engine. All run the same NLS core in your browser.
+            interactive
+            Education dashboard
+            Watch Akhmediev breathers, Peregrine solitons and JONSWAP seas evolve live. Tune resolution, speed and scenarios.
+            Open education →
+            forecast
+            Production forecast
+            Enter a real sea state (Hs, Tp, γ) and get a physical, dimensionality-correct blow-up and rogue assessment.
+            Open production →
+            docs
+            Documentation
+            Full reference: mathematics, architecture, CLI, instruments, web dashboard, and contributing.
+            Read the docs →
+        Why this exists
+        The problem no statistical model can solve.
+        $2B+ / year in shipping damage, ~100 cruise-ship deaths / yr, offshore-platform damage, submarine-cable outages and wind-turbine failure — all from a few minutes of rogue-wave energy.
+        Today's tools are WAVEWATCH III / SWAN (spectral, no individual waves), CFD (accurate but far too slow for real time) and Rayleigh statistics (systematically underestimate extremes).
+        Rogue sits on the 2026 Breakthrough-Prize mathematics of finite-time blow-up in supercritical defocusing NLS (Merle–Raphael–Rodnianski–Szeftel) to flag the precise moment a field is about to concentrate — directly, in real time.
+        How to use it
+        No install. No browser of heavy setup. Just press go.
+          Pick a window — the interactive education playground or the real-data production forecast. Or run the same engine from the CLI and scripts.
+          Set the state — choose a scenario and resolution, or type a real sea state (Hs, Tp, peak γ) for a physical forecast.
+          Run & watch — the wasm solver integrates the field with a symplectic scheme; cast-colored crest factors and a risk label appear.
+          Interpret — < 2.2 σ is everyday, ≥ 2.2 σ is rogue territory, flags bless blow-up.
+        The parameters
+        What the knobs mean, and the equations behind them.
+            ParameterMeaningWhere
+              p
+              Nonlinear exponent in i∂tψ = −(β₂/2)∇²ψ + γ|ψ|p−1ψ. Supercritical (p > 5) admits finite-time blow-up.
+              edu · blow-up
+              β₂
+              Dispersion coefficient (m²/s in production, tuned by sea state).
+              solver
+              γ
+              Nonlinearity — JONSWAP spectrum peak in production, constant in edu.
+              prod + edu
+              Hs
+              Significant wave height (m). Drives amplitude A = Hs/4.
+              production
+              Tp
+              Peak period (s). Sets deep-water ω₀ = 2π/Tp and wave number k₀ = ω₀²/g.
+              resolution
+              Grid size (256→1024). More points, finer crests, slower run.
+              education
+              speed
+              Time integrator speed multiplier for the education view.
+              seed
+              Randomness for the random-sea field, so every run is reproducible.
+              both
+        Command line
+        Same engine, no browser — for scripts, servers and automation.
+            CommandWhat it does
+            cargo install --path . --root ~/.localBuild & install the rogue binary to ~/.local/bin.
+            rogue predict data/sample-buoy.csvPhysical sea-state forecast from a CSV/TSV of t, hs, tp (optionally gamma).
+            rogue predict sea.csv --jsonSame forecast as machine-readable JSON (for hooks).
+            rogue akhmediev rogue peregrine rogue ocean rogue blowupScenario solvers with conservation + blow-up + rogue diagnostics.
+            ./dev p sea.csvRepo alias for the production forecast path.
+        Runs are seeded and reproducible; the report prints mass / momentum / energy conservation and flagged rogue events.
+        Connect your instruments
+        Real-time prediction on a buoy, vessel or ashore — a guard, tug or bridge can feed the solver live.
+          1 · Stream a feedPoint an instrument or bridge system at the CLI: each window writes a CSV row t,hs,tp. The solver forecasts ahead and flags rogue risk.
+          2 · Predict continuouslyRun rogue predict <stream> --json on a loop or cron. Output is clean JSON events — easy to wire into a helmsman alarm or routing aid.
+          3 · Bridge on the webThe same forecast runs in-browser on /production — no software install on the vessel.
+          4 · ReproducibleFixed seeds and deterministic integrations mean an AIS / log replay produces identical alerts for audit.
+        ROGUE.
+        Free software — MIT · GitHub · jesed.dev
+        Built on Merle–Raphael–Rodnianski–Szeftel (2026) · Akhmediev breathers · Peregrine solitons · Benjamin–Feir instability.
+      Education
+      Production
+      Docs
+
+## Education
+
+    Rogue — education · blow-up &amp; rogue-wave predictor
+      :root {
+        color-scheme: dark;
+        --bg: #06070b;
+        --panel: #11131b;
+        --accent: #3db8ff;
+        --warn: #ffb03d;
+        --danger: #ff5d5d;
+        --text: #e8eaf0;
+        --muted: #8b90a0;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 13px/1.4 "IBM Plex Sans", "Segoe UI", system-ui, sans-serif; }
+      header { padding: 12px 16px; border-bottom: 1px solid #1e2230; background: var(--panel); display: flex; gap: 16px; align-items: center; }
+      header a { color: var(--accent); text-decoration: none; font-size: 13px; }
+      header .brand { font-weight: 700; letter-spacing: .05em; }
+      #app { display: grid; grid-template-columns: 280px 1fr; height: calc(100% - 46px); }
+      aside { background: var(--panel); border-right: 1px solid #1e2230; padding: 16px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
+      h1 { font-size: 18px; margin: 0; letter-spacing: 0.04em; }
+      h1 span { color: var(--accent); }
+      .muted { color: var(--muted); font-size: 11px; }
+      label { display: flex; flex-direction: column; gap: 4px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+      select, input[type="range"], button { font: inherit; color: var(--text); background: #1a1d28; border: 1px solid #2a2f40; border-radius: 6px; padding: 8px 10px; }
+      button { cursor: pointer; background: linear-gradient(180deg, #2a3144, #1c2030); }
+      button:hover { border-color: var(--accent); }
+      button.primary { background: linear-gradient(180deg, #5cc2ff, #1f7fd0); color: #05121f; border: none; font-weight: 600; }
+      #stats { font-family: ui-monospace, monospace; font-size: 11px; color: var(--muted); white-space: pre-wrap; }
+      #eta { color: var(--muted); }
+      #eta.warn { color: var(--warn); font-weight: 600; }
+      #eta.danger { color: var(--danger); font-weight: 700; }
+      main { position: relative; overflow: hidden; background: #000; }
+      canvas { width: 100%; height: 100%; display: block; }
+      .hint { position: absolute; left: 16px; bottom: 16px; color: var(--muted); pointer-events: none; font-size: 12px; }
+      .kurt { color: var(--accent); }
+      &larr; home
+      ROGUE
+      education — blow-up &amp; rogue-wave predictor
+          ROGUE //
+          blow-up &amp; rogue-wave predictor
+          Scenario
+            Akhmediev breather
+            Peregrine soliton
+            JONSWAP random sea
+            Stokes + sidebands
+            Soliton walk
+            Quintic blow-up
+          Resolution
+            256
+            512
+            1024
+          Speed 1×
+        Reset
+        Pause
+        loading wasm…
+        split-step NLS · Strang symplectic · seeded
+        production forecast →
+        |ψ| field — cyan = sea level, white = rogue crest
+
+## Production
+
+    Rogue — production forecast
+      :root { color-scheme: dark; --bg:#06070b; --panel:#11131b; --accent:#3db8ff; --warn:#ffb03d; --danger:#ff5d5d; --text:#e8eaf0; --muted:#8b90a0; }
+      * { box-sizing:border-box; }
+      html, body { margin:0; min-height:100vh; background:var(--bg); color:var(--text); font:13px/1.45 "IBM Plex Sans","Segoe UI",system-ui,sans-serif; }
+      .wrap { max-width:920px; margin:0 auto; padding:28px 20px; }
+      h1 { font-size:20px; letter-spacing:.04em; }
+      h1 span { color:var(--accent); }
+      .muted { color:var(--muted); font-size:12px; }
+      .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:18px 0; }
+      label { display:flex; flex-direction:column; gap:6px; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; }
+      input, button, select { font:inherit; color:var(--text); background:#1a1d28; border:1px solid #2a2f40; border-radius:6px; padding:10px 12px; }
+      input { width:100%; }
+      button { cursor:pointer; background:linear-gradient(180deg,#2a3144,#1c2030); }
+      button.primary { background:linear-gradient(180deg,#5cc2ff,#1f7fd0); color:#05121f; border:none; font-weight:700; }
+      button:hover { border-color:var(--accent); }
+      .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-top:8px; }
+      .card { background:var(--panel); border:1px solid #1e2230; border-radius:10px; padding:16px; }
+      .card .k { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.06em; }
+      .card .v { font-size:22px; margin-top:4px; font-variant-numeric:tabular-nums; }
+      .card.sev { border-color:var(--danger); } .card.hi { border-color:#ff9b3d; } .card.elev { border-color:var(--gold); } .card.low { border-color:#2f9e5f; }
+      .ev { background:#0d1018; border:1px solid #222838; border-radius:8px; padding:10px 14px; margin:6px 0; font-family:ui-monospace,monospace; font-size:13px; color:#c8d0e0; }
+      .ev b { color:#fff; }
+      pre { background:#0d1018; border:1px solid #222838; border-radius:8px; padding:14px; overflow:auto; font-size:12px; max-height:320px; }
+      a.back { color:var(--accent); text-decoration:none; font-size:13px; }
+      ← home
+      ROGUE production forecast
+      Enter a real sea state → live physical NLS forecast
+        Hs — significant height [m] 
+        Tp — peak period [s] 
+        γ — JONSWAP peak 
+      Run forecast
+      loading wasm…
+
+## Docs
+
+    Rogue — documentation
+      :root {
+        color-scheme: light;
+        --bg: #eef7f6;
+        --white: #ffffff;
+        --ocean-900: #062a2b;
+        --ocean-700: #0d4a4a;
+        --ocean-500: #1f7a72;
+        --green: #1f9d68;
+        --green-400: #27c48a;
+        --gold: #d9a832;
+        --text: #173b3b;
+        --muted: #5b7a7a;
+        --line-c: #d7e7e5;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.7 "IBM Plex Sans","Segoe UI",system-ui,sans-serif; }
+      header { background: linear-gradient(160deg, #062a2b 0%, #0a3f3f 55%, #145a52 100%); padding: 32px 0; }
+      header .wrap { max-width: 860px; margin: 0 auto; padding: 0 22px; display: flex; justify-content: space-between; align-items: baseline; }
+      header a { color: #cfe8e3; text-decoration: none; font-size: 14px; }
+      header .brand { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: .06em; }
+      header .brand span { color: var(--green-400); }
+      nav.toc { position: sticky; top: 0; background: var(--white); border-bottom: 1px solid var(--line-c); padding: 10px 0; z-index: 10; }
+      nav.toc .wrap { max-width: 860px; margin: 0 auto; padding: 0 22px; display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; }
+      nav.toc a { color: var(--ocean-700); text-decoration: none; font-weight: 600; }
+      nav.toc a:hover { color: var(--green); }
+      main { max-width: 860px; margin: 0 auto; padding: 28px 22px 60px; }
+      h2 { font-size: 24px; color: var(--ocean-900); margin: 44px 0 0; padding-top: 12px; border-top: 2px solid var(--line-c); }
+      h2:first-of-type { border-top: none; margin-top: 0; }
+      h3 { font-size: 18px; color: var(--ocean-700); margin: 28px 0 8px; }
+      p { margin: 8px 0; }
+      pre, code { background: #e5f1ee; font-family: ui-monospace, "IBM Plex Mono", monospace; font-size: 14px; }
+      pre { padding: 16px 20px; border-radius: 10px; overflow-x: auto; border: 1px solid var(--line-c); line-height: 1.5; }
+      code { padding: 2px 7px; border-radius: 6px; }
+      pre code { padding: 0; background: transparent; }
+      table { width: 100%; border-collapse: collapse; background: var(--white); border: 1px solid var(--line-c); border-radius: 12px; overflow: hidden; margin: 16px 0; }
+      th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line-c); vertical-align: top; }
+      th { background: #1c5450; color: #eafbf3; font-size: 13px; letter-spacing: .05em; text-transform: uppercase; }
+      tr:last-child td { border-bottom: none; }
+      .note { background: #fef9e8; border: 1px solid #f0d678; border-radius: 10px; padding: 14px 18px; margin: 16px 0; font-size: 14px; color: #7a5d10; }
+      .muted { color: var(--muted); font-size: 14px; }
+      .gold-text { color: var(--gold); font-weight: 700; text-decoration: none; }
+      footer { border-top: 1px solid var(--line-c); background: var(--white); padding: 22px 0; text-align: center; font-size: 13px; color: var(--muted); }
+      footer a { color: var(--ocean-500); font-weight: 600; text-decoration: none; }
+        ROGUE.
+        ← home
+        Overview
+        Mathematics
+        Architecture
+        CLI usage
+        Production mode
+        Instruments
+        Web dashboard
+        Download
+        Contributing
+      Overview
+        Rogue is a real-time physics-based rogue-wave predictor built on
+        the mathematics of finite-time blow-up in the supercritical defocusing
+        nonlinear Schrödinger equation (NLS). It replaces heuristic statistical
+        methods with a deterministic symplectic solver.
+      Three access points — one engine:
+        Browser — education dashboard + production forecast at rogue.jesed.dev/education (no install)
+        CLI binary — download from GitHub Releases (Linux, macOS, Windows)
+        Rust crate — cargo install --path . --root ~/.local
+      Mathematics
+      Governing equation
+      The solver integrates:
+      i ∂t ψ = −(β₂/2) ∇²ψ + γ |ψ|^(p−1) ψ
+      with Strang symplectic split-step — half-step dispersion, full-step nonlinearity, half-step dispersion. Unitary by construction, O(dt²) energy conservation.
+        ParameterMeaningDefault
+        β₂Group-velocity dispersion coefficient (m²/s in production)2
+        γNonlinearity — positive = defocusing, negative = focusing+1 (defocusing)
+        pNonlinear exponent. Supercritical p > 5 (d=1) admits blow-up3 or 7
+      Invariants
+        InvariantFormulaConservation
+        MassM = ∫|ψ|² dxExact (unitary)
+        MomentumP = ∫ Im(ψ̄·ψ_x) dxConserved
+        EnergyE = ∫ (β₂/2·|ψ_x|² − γ/(p+1)·|ψ|^(p+1)) dxO(dt²)
+        H¹ seminorm‖∇ψ‖²Blow-up monitor
+      Blow-up detection
+      Virial evolution + H¹ acceleration tracking. The ETA fit uses y = a + bt = 1/‖∇ψ‖² — extrapolates the singularity time when H¹ → ∞. Works for the supercritical regime p > 5 (Merle–Raphael–Rodnianski–Szeftel 2026).
+      Benjamin–Feir instability
+      Rogue waves emerge from side-band instability of a uniform wave train:
+      γ(ν) = ν √(2A² − ν²)
+      Unstable for 0 < ν < √2·A. Maximum growth at ν = A. This is the physical mechanism behind Akhmediev breathers and the Peregrine soliton.
+      Architecture
+      Crate map
+        CratePurpose
+        rogue-nlsSplit-step NLS solver (1D/2D), FFT, diagnostics, JONSWAP/Stokes/soliton/blowup scenarios
+        rogue-blow-upVirial + energy + H¹-acceleration blow-up detection with ETA extrapolation
+        rogue-rogueAkhmediev / Kuznetsov–Ma / Peregrine breathers, Benjamin–Feir gain, crest-factor detection
+        rogue-fluidMadelung transform → compressible Euler bridge
+        rogue-plasmaPlasma modulational instability gain
+        rogue-fiberFiber-optic soliton power / bandwidth (supercontinuum)
+        rogue-turbulenceClear-air turbulence intermittency
+        rogue-wasmwasm-bindgen bridge for the browser dashboard
+        rogue-productionReal-data sea-state intake + physical forecast bridge
+      CLI usage
+      Install
+      # From GitHub Releases (no Rust needed)
+curl -L https://github.com/jesedv/rogue/releases/download/v0.1.0/rogue -o rogue
+chmod +x rogue
+./rogue help
+# From source
+cargo install --path . --root ~/.local
+      Commands
+        CommandDescription
+        rogue predict data.csvProduction forecast from sea-state CSV (human-readable report)
+        rogue predict data.csv --jsonSame forecast as JSON for automation
+        rogue akhmediev <phi> <t>Akhmediev breather evolution (phi in radians, default 1.0)
+        rogue peregrine <t>Peregrine soliton evolution
+        rogue ocean <t>JONSWAP random sea (Hs=4.0m default)
+        rogue blowup <p> <t>Supercritical blow-up run (p=7 default)
+        rogue soliton <t>Soliton walk
+        rogue fiber <t>Fiber-optic diagnostics
+      Every run is seeded and reproducible. Re-run the same input and you get identical output — important for audit.
+      Production mode
+      Production mode takes real, dimensional sea-state observations and runs the physical NLS forecast bridge. Input is a CSV or TSV with t, hs, tp (optional gamma).
+        ColumnAliasesRequired
+        ttime, timestamp, t_sYes
+        hsHs, significant_wave_heightYes (must be >0)
+        tpTp, peakperiodYes (must be >0)
+        gammaJONSWAP peak enhancementNo (default 3.3)
+      The physical bridge derives:
+Carrier frequency:  ω₀ = 2π / Tp
+Wave number:       k₀ = ω₀² / g          (deep-water dispersion)
+Dispersion:        β  = ω₀ / (8 k₀²)      [m²/s]
+Nonlinearity:      γ  = ω₀ k₀² / 2        [/m·s]
+Amplitude:         A  = Hs / 4
+Steepness:         2A k₀
+      Output
+      Each observation produces a forecast with:
+        Max crest factor — in units of σ (≥ 2.2 = rogue)
+        Risk level — normal / elevated / high / severe
+        Rogue events — time, position, crest factor, Hs in metres
+        Conservation — mass / momentum / energy at final step
+      Connecting instruments
+      Any system that produces sea-state data can feed Rogue:
+      Streaming feed
+      # Buoy / AIS / bridge writes observations to a rolling CSV
+echo "0,4.0,11.0,3.3" > /var/feed/current.csv
+rogue predict /var/feed/current.csv --json >> /var/log/rogue-alerts.json
+      Loop / cron
+      # Poll every 60 seconds — good for buoys, met stations
+watch -n 60 'rogue predict /dev/stdin --json < /var/feed/current.csv'
+      WebSocket bridge (advanced)
+      # Pipe streaming data through a lightweight WS server
+socat TCP-LISTEN:8080,fork EXEC:'./rogue predict --json /dev/stdin'
+      Audit replay
+      Because Rogue is deterministic and seeded, replaying historical AIS / buoy logs produces identical alerts — critical for insurance, incident review, and regulatory compliance.
+      Web dashboard
+      Education mode
+      Live interactive NLS simulation at /education. Explore six scenarios:
+        Akhmediev breather — periodic modulation that amplifies sidebands
+        Peregrine soliton — a single peak that "appears from nowhere and disappears without a trace"
+        JONSWAP random sea — realistic ocean spectrum with rogue candidates
+        Stokes + sidebands — Benjamin–Feir lab setup
+        Soliton walk — stable solitary wave propagation
+        Quintic blow-up — supercritical NLS with finite-time singularity
+      Controls: resolution (256→1024 grid points), speed multiplier (1×–8×), pause/reset. The canvas renders |ψ|² in real time with diagnostics — mass, momentum, energy, H¹ seminorm, kurtosis, and blow-up ETA.
+      At /production, enter a real sea state (Hs, Tp, peak γ) and get a physical, dimensionality-correct forecast running in your browser via WASM. Same engine as the CLI — no server round-trip.
+      WASM size
+      The browser bundle is 262 kB (gzipped: ~98 kB). The hard constraint is ≤ 8 MB — verified at every build.
+      Download
+      Pre-built binaries for Linux x86-64 are attached to every GitHub Release. macOS and Windows binaries coming via CI.
+      curl -L https://github.com/jesedv/rogue/releases/download/v0.1.0/rogue -o rogue
+sudo mv rogue /usr/local/bin/
+rogue predict sea.csv
+      The crates are published on crates.io — Rust users can also cargo install.
+      Contributing
+      Contributions welcome. Fork github.com/jesedv/rogue, branch from main, and send a PR.
+      Before pushing:
+      ./dev check              # cargo check + cargo test --workspace
+./dev regress            # physics regression suite
+./dev regress-prod       # production CSV intake regression
+      Free software (MIT).
+      rogue.jesed.dev ·
+      GitHub ·
+      jesed.dev
