@@ -1,0 +1,15 @@
+[package]
+name = "rogue-turbulence"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Clear-air turbulence: intermittent extreme-event detection on NLS amplitude fields"
+
+[dependencies]
+rogue-nls.workspace = true
+rogue-rogue.workspace = true
+serde.workspace = true
+
+[dev-dependencies]
+approx.workspace = true
+rand.workspace = true

@@ -1,0 +1,13 @@
+[package]
+name = "rogue-blow-up"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Finite-time blow-up detection for supercritical NLS (virial, H¹, concentration, ETA)"
+
+[dependencies]
+rogue-nls.workspace = true
+serde.workspace = true
+
+[dev-dependencies]
+approx.workspace = true

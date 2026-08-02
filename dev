@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")"
+CMD=${1:-help}
+case $CMD in
+  test|t)     cargo test --workspace -- --nocapture ;;
+  build|b)    cargo build --workspace --release ;;
+  run|r)      cargo run --release -- "${@:2}" ;;
+  predict|p)
+    cargo run --release -- predict "${@:2}"
+    ;;
+  bench)      cargo run --release --bin bench_nls ;;
+  wasm|w)
+    wasm-pack build crates/rogue-wasm --target web --out-dir ../../education/pkg --release
+    ;;
+  check|c)    cargo check --workspace && cargo test --workspace ;;
+  clean)      cargo clean; rm -rf education/pkg education/node_modules education/dist ;;
+  ui|edu)
+    (cd education && npm run dev)
+    ;;
+  regress)    bash scripts/regress-all.sh ;;
+  regress-prod)
+    bash scripts/regress-production.sh
+    ;;
+  setup)
+    cargo fetch
+    (cd education && npm install)
+    ./dev wasm
+    ;;
+  *)
+    echo "Usage: ./dev [t|b|r|bench|w|c|clean|ui|regress|setup]"
+    echo "  t/test   cargo test workspace"
+    echo "  b/build  release build"
+    echo "  r/run    rogue CLI [scenario …]"
+    echo "  p/predict  production sea-state forecast from CSV"
+    echo "  bench    NLS 1024×1024 bench"
+    echo "  w/wasm   wasm-pack → education/pkg"
+    echo "  ui       vite dev server (education demo)"
+    echo "  regress  akhmediev/peregrine/ocean/blowup regression suite"
+    echo "  regress-prod  production CSV intake regression"
+    echo "  setup    fetch + npm i + wasm"
+    ;;
+esac

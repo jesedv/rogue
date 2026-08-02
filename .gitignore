@@ -1,0 +1,27 @@
+# Rust
+/target
+
+# Node / UI
+node_modules/
+education/node_modules/
+education/dist/
+education/pkg/
+
+# wasm-pack artifacts
+pkg/
+
+# Local OS
+.DS_Store
+*.swp
+
+# Data (production inputs stay out of the repo)
+data/**/*.csv
+data/**/*.txt
+*.raw
+
+# Editor
+.vscode/
+.idea/
+
+# Task tracker (session-local, not committed)
+.opencode/

@@ -1,0 +1,13 @@
+[package]
+name = "rogue-fiber"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Fiber-optic NLSE: solitons, Raman, supercontinuum broadening diagnostics"
+
+[dependencies]
+rogue-nls.workspace = true
+serde.workspace = true
+
+[dev-dependencies]
+approx.workspace = true

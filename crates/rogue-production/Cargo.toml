@@ -1,0 +1,17 @@
+[package]
+name = "rogue-production"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Production intake + physical forecast bridge for the rogue predictor"
+
+[dependencies]
+rogue-nls.workspace = true
+rogue-blow-up.workspace = true
+rogue-rogue.workspace = true
+num-complex.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+approx.workspace = true

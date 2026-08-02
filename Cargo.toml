@@ -1,0 +1,90 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/rogue-nls",
+    "crates/rogue-blow-up",
+    "crates/rogue-rogue",
+    "crates/rogue-fluid",
+    "crates/rogue-plasma",
+    "crates/rogue-fiber",
+    "crates/rogue-turbulence",
+    "crates/rogue-wasm",
+    "crates/rogue-production",
+    ".",
+]
+default-members = ["."]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+authors = ["Rogue Contributors"]
+repository = "https://github.com/rogue-wave/rogue"
+
+[workspace.dependencies]
+rogue-nls = { path = "crates/rogue-nls" }
+rogue-blow-up = { path = "crates/rogue-blow-up" }
+rogue-rogue = { path = "crates/rogue-rogue" }
+rogue-fluid = { path = "crates/rogue-fluid" }
+rogue-plasma = { path = "crates/rogue-plasma" }
+rogue-fiber = { path = "crates/rogue-fiber" }
+rogue-turbulence = { path = "crates/rogue-turbulence" }
+rogue-wasm = { path = "crates/rogue-wasm" }
+num-complex = { version = "0.4", features = ["serde"] }
+rustfft = "6"
+serde = { version = "1", features = ["derive"] }
+thiserror = "2"
+rand = "0.8"
+rand_pcg = "0.3"
+rayon = "1.10"
+wasm-bindgen = "0.2"
+js-sys = "0.3"
+web-sys = "0.3"
+console_error_panic_hook = "0.1"
+approx = "0.5"
+getrandom = { version = "0.2", features = ["js"] }
+
+[package]
+name = "rogue"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Finite-time blow-up & rogue-wave predictor (defocusing NLS, Merle–Raphael–Rodnianski–Szeftel)"
+readme = "README.md"
+default-run = "rogue"
+
+[dependencies]
+rogue-nls.workspace = true
+rogue-blow-up.workspace = true
+rogue-rogue.workspace = true
+rogue-fluid.workspace = true
+rogue-plasma.workspace = true
+rogue-fiber.workspace = true
+rogue-turbulence.workspace = true
+num-complex.workspace = true
+serde.workspace = true
+rand.workspace = true
+rand_pcg.workspace = true
+rayon.workspace = true
+rogue-production = { version = "0.1.0", path = "crates/rogue-production" }
+serde_json = "1.0.151"
+
+[[bin]]
+name = "rogue"
+path = "src/main.rs"
+
+[[bin]]
+name = "bench_nls"
+path = "src/bin_bench_nls.rs"
+
+[dev-dependencies]
+approx = "0.5"
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = 3
+
+[profile.bench]
+lto = true
+codegen-units = 1
