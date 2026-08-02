@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/jesed/rogue/actions"><img src="https://img.shields.io/github/actions/workflow/status/jesed/rogue/ci.yml?branch=main" alt="CI" /></a>
+  <a href="https://github.com/jesedv/rogue/actions"><img src="https://img.shields.io/github/actions/workflow/status/jesed/rogue/ci.yml?branch=main" alt="CI" /></a>
   <a href="https://crates.io/crates/rogue-nls"><img src="https://img.shields.io/crates/v/rogue-nls" alt="crates.io" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT" /></a>
   <a href="https://rogue.jesed.dev"><img src="https://img.shields.io/badge/site-rogue.jesed.dev-blue" alt="site" /></a>
@@ -76,7 +76,7 @@ interactive education playground and the production forecast form.
 ### From source (Rust)
 
 ```bash
-git clone https://github.com/jesed/rogue.git && cd rogue
+git clone https://github.com/jesedv/rogue.git && cd rogue
 ./dev setup     # cargo fetch + npm install + wasm-pack build
 ./dev test      # cargo test --workspace
 ./dev ui        # browser dashboard at localhost:5173
@@ -200,14 +200,14 @@ Contributions are welcome. Open an issue, fork the repo, and send a PR.
 
 - **Live site:** [rogue.jesed.dev](https://rogue.jesed.dev)
 - **Author:** [jesed.dev](https://jesed.dev)
-- **GitHub:** [github.com/jesed/rogue](https://github.com/jesed/rogue)
+- **GitHub:** [github.com/jesedv/rogue](https://github.com/jesedv/rogue)
 - **crates.io:** [rogue-nls](https://crates.io/crates/rogue-nls)
 - **Docs:** `docs/math.md`
 
 [Live site]: https://rogue.jesed.dev
 [Education dashboard]: https://rogue.jesed.dev/education
 [Production forecast]: https://rogue.jesed.dev/production
-[Download binary]: https://github.com/jesed/rogue/releases
-[GitHub Release]: https://github.com/jesed/rogue/releases
+[Download binary]: https://github.com/jesedv/rogue/releases
+[GitHub Release]: https://github.com/jesedv/rogue/releases
 [crates.io]: https://crates.io/crates/rogue-nls
 [Contributing]: #contributing
