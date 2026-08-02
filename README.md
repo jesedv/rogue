@@ -46,7 +46,7 @@ Finite-time blow-up detection gives a mathematically rigorous, real-time flag.
 
 ---
 
-- [Live site] &nbsp;·&nbsp; [Education dashboard] &nbsp;·&nbsp; [Production forecast]
+- [Docs] - [Live site] &nbsp;nbsp;·- [Live site] &nbsp;nbsp; [Live site] - [Live site] &nbsp;nbsp;·&nbsp; [Education dashboard] &nbsp;·&nbsp; [Production forecast]
 - [Download binary] &nbsp;·&nbsp; [crates.io] &nbsp;·&nbsp; [Contributing]
 
 ---
@@ -204,6 +204,7 @@ Contributions are welcome. Open an issue, fork the repo, and send a PR.
 - **crates.io:** [rogue-nls](https://crates.io/crates/rogue-nls)
 - **Docs:** `docs/math.md`
 
+[Documentation]: https://rogue.jesed.dev/docs
 [Live site]: https://rogue.jesed.dev
 [Education dashboard]: https://rogue.jesed.dev/education
 [Production forecast]: https://rogue.jesed.dev/production

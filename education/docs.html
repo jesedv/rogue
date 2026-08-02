@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rogue — documentation</title>
+    <meta name="description" content="Full documentation for Rogue: NLS solver, blow-up detection, CLI usage, instrument connections, and web dashboard." />
+    <link rel="icon" href="/waves-green.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://rogue.jesed.dev/docs" />
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #eef7f6;
+        --white: #ffffff;
+        --ocean-900: #062a2b;
+        --ocean-700: #0d4a4a;
+        --ocean-500: #1f7a72;
+        --green: #1f9d68;
+        --green-400: #27c48a;
+        --gold: #d9a832;
+        --text: #173b3b;
+        --muted: #5b7a7a;
+        --line-c: #d7e7e5;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.7 "IBM Plex Sans","Segoe UI",system-ui,sans-serif; }
+      header { background: linear-gradient(160deg, #062a2b 0%, #0a3f3f 55%, #145a52 100%); padding: 32px 0; }
+      header .wrap { max-width: 860px; margin: 0 auto; padding: 0 22px; display: flex; justify-content: space-between; align-items: baseline; }
+      header a { color: #cfe8e3; text-decoration: none; font-size: 14px; }
+      header .brand { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: .06em; }
+      header .brand span { color: var(--green-400); }
+      nav.toc { position: sticky; top: 0; background: var(--white); border-bottom: 1px solid var(--line-c); padding: 10px 0; z-index: 10; }
+      nav.toc .wrap { max-width: 860px; margin: 0 auto; padding: 0 22px; display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; }
+      nav.toc a { color: var(--ocean-700); text-decoration: none; font-weight: 600; }
+      nav.toc a:hover { color: var(--green); }
+      main { max-width: 860px; margin: 0 auto; padding: 28px 22px 60px; }
+      h2 { font-size: 24px; color: var(--ocean-900); margin: 44px 0 0; padding-top: 12px; border-top: 2px solid var(--line-c); }
+      h2:first-of-type { border-top: none; margin-top: 0; }
+      h3 { font-size: 18px; color: var(--ocean-700); margin: 28px 0 8px; }
+      p { margin: 8px 0; }
+      pre, code { background: #e5f1ee; font-family: ui-monospace, "IBM Plex Mono", monospace; font-size: 14px; }
+      pre { padding: 16px 20px; border-radius: 10px; overflow-x: auto; border: 1px solid var(--line-c); line-height: 1.5; }
+      code { padding: 2px 7px; border-radius: 6px; }
+      pre code { padding: 0; background: transparent; }
+      table { width: 100%; border-collapse: collapse; background: var(--white); border: 1px solid var(--line-c); border-radius: 12px; overflow: hidden; margin: 16px 0; }
+      th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line-c); vertical-align: top; }
+      th { background: #1c5450; color: #eafbf3; font-size: 13px; letter-spacing: .05em; text-transform: uppercase; }
+      tr:last-child td { border-bottom: none; }
+      .note { background: #fef9e8; border: 1px solid #f0d678; border-radius: 10px; padding: 14px 18px; margin: 16px 0; font-size: 14px; color: #7a5d10; }
+      .muted { color: var(--muted); font-size: 14px; }
+      .gold-text { color: var(--gold); font-weight: 700; text-decoration: none; }
+      footer { border-top: 1px solid var(--line-c); background: var(--white); padding: 22px 0; text-align: center; font-size: 13px; color: var(--muted); }
+      footer a { color: var(--ocean-500); font-weight: 600; text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <div class="brand">ROGUE<span>.</span></div>
+        <a href="/">← home</a>
+      </div>
+    </header>
+
+    <nav class="toc">
+      <div class="wrap">
+        <a href="#overview">Overview</a>
+        <a href="#math">Mathematics</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#cli">CLI usage</a>
+        <a href="#production">Production mode</a>
+        <a href="#instruments">Instruments</a>
+        <a href="#web">Web dashboard</a>
+        <a href="#download">Download</a>
+        <a href="#contributing">Contributing</a>
+      </div>
+    </nav>
+
+    <main>
+      <h2 id="overview">Overview</h2>
+      <p>
+        Rogue is a real-time <strong>physics-based rogue-wave predictor</strong> built on
+        the mathematics of finite-time blow-up in the supercritical defocusing
+        nonlinear Schrödinger equation (NLS). It replaces heuristic statistical
+        methods with a deterministic symplectic solver.
+      </p>
+      <p>Three access points — one engine:</p>
+      <ul>
+        <li><strong>Browser</strong> — education dashboard + production forecast at <a href="https://rogue.jesed.dev" class="gold-text">rogue.jesed.dev</a> (no install)</li>
+        <li><strong>CLI binary</strong> — <a href="https://github.com/jesedv/rogue/releases" class="gold-text">download from GitHub Releases</a> (Linux, macOS, Windows)</li>
+        <li><strong>Rust crate</strong> — <code>cargo install --path . --root ~/.local</code></li>
+      </ul>
+
+      <h2 id="math">Mathematics</h2>
+      <h3>Governing equation</h3>
+      <p>The solver integrates:</p>
+      <pre><code>i ∂t ψ = −(β₂/2) ∇²ψ + γ |ψ|^(p−1) ψ</code></pre>
+      <p>with <strong>Strang symplectic split-step</strong> — half-step dispersion, full-step nonlinearity, half-step dispersion. Unitary by construction, <code>O(dt²)</code> energy conservation.</p>
+
+      <table>
+        <tr><th>Parameter</th><th>Meaning</th><th>Default</th></tr>
+        <tr><td><code>β₂</code></td><td>Group-velocity dispersion coefficient (m²/s in production)</td><td>2</td></tr>
+        <tr><td><code>γ</code></td><td>Nonlinearity — positive = defocusing, negative = focusing</td><td>+1 (defocusing)</td></tr>
+        <tr><td><code>p</code></td><td>Nonlinear exponent. Supercritical p &gt; 5 (d=1) admits blow-up</td><td>3 or 7</td></tr>
+      </table>
+
+      <h3>Invariants</h3>
+      <table>
+        <tr><th>Invariant</th><th>Formula</th><th>Conservation</th></tr>
+        <tr><td>Mass</td><td>M = ∫|ψ|² dx</td><td>Exact (unitary)</td></tr>
+        <tr><td>Momentum</td><td>P = ∫ Im(ψ̄·ψ_x) dx</td><td>Conserved</td></tr>
+        <tr><td>Energy</td><td>E = ∫ (β₂/2·|ψ_x|² − γ/(p+1)·|ψ|^(p+1)) dx</td><td>O(dt²)</td></tr>
+        <tr><td>H¹ seminorm</td><td>‖∇ψ‖²</td><td>Blow-up monitor</td></tr>
+      </table>
+
+      <h3>Blow-up detection</h3>
+      <p>Virial evolution + H¹ acceleration tracking. The <strong>ETA fit</strong> uses <code>y = a + bt = 1/‖∇ψ‖²</code> — extrapolates the singularity time when <code>H¹ → ∞</code>. Works for the supercritical regime <code>p > 5</code> (Merle–Raphael–Rodnianski–Szeftel 2026).</p>
+
+      <h3>Benjamin–Feir instability</h3>
+      <p>Rogue waves emerge from side-band instability of a uniform wave train:</p>
+      <pre><code>γ(ν) = ν √(2A² − ν²)</code></pre>
+      <p>Unstable for <code>0 &lt; ν &lt; √2·A</code>. Maximum growth at <code>ν = A</code>. This is the physical mechanism behind Akhmediev breathers and the Peregrine soliton.</p>
+
+      <h2 id="architecture">Architecture</h2>
+      <h3>Crate map</h3>
+      <table>
+        <tr><th>Crate</th><th>Purpose</th></tr>
+        <tr><td><code>rogue-nls</code></td><td>Split-step NLS solver (1D/2D), FFT, diagnostics, JONSWAP/Stokes/soliton/blowup scenarios</td></tr>
+        <tr><td><code>rogue-blow-up</code></td><td>Virial + energy + H¹-acceleration blow-up detection with ETA extrapolation</td></tr>
+        <tr><td><code>rogue-rogue</code></td><td>Akhmediev / Kuznetsov–Ma / Peregrine breathers, Benjamin–Feir gain, crest-factor detection</td></tr>
+        <tr><td><code>rogue-fluid</code></td><td>Madelung transform → compressible Euler bridge</td></tr>
+        <tr><td><code>rogue-plasma</code></td><td>Plasma modulational instability gain</td></tr>
+        <tr><td><code>rogue-fiber</code></td><td>Fiber-optic soliton power / bandwidth (supercontinuum)</td></tr>
+        <tr><td><code>rogue-turbulence</code></td><td>Clear-air turbulence intermittency</td></tr>
+        <tr><td><code>rogue-wasm</code></td><td>wasm-bindgen bridge for the browser dashboard</td></tr>
+        <tr><td><code>rogue-production</code></td><td>Real-data sea-state intake + physical forecast bridge</td></tr>
+      </table>
+
+      <h2 id="cli">CLI usage</h2>
+      <h3>Install</h3>
+      <pre><code># From GitHub Releases (no Rust needed)
+curl -L https://github.com/jesedv/rogue/releases/download/v0.1.0/rogue -o rogue
+chmod +x rogue
+./rogue help
+
+# From source
+cargo install --path . --root ~/.local</code></pre>
+
+      <h3>Commands</h3>
+      <table>
+        <tr><th>Command</th><th>Description</th></tr>
+        <tr><td><code>rogue predict data.csv</code></td><td>Production forecast from sea-state CSV (human-readable report)</td></tr>
+        <tr><td><code>rogue predict data.csv --json</code></td><td>Same forecast as JSON for automation</td></tr>
+        <tr><td><code>rogue akhmediev &lt;phi&gt; &lt;t&gt;</code></td><td>Akhmediev breather evolution (phi in radians, default 1.0)</td></tr>
+        <tr><td><code>rogue peregrine &lt;t&gt;</code></td><td>Peregrine soliton evolution</td></tr>
+        <tr><td><code>rogue ocean &lt;t&gt;</code></td><td>JONSWAP random sea (Hs=4.0m default)</td></tr>
+        <tr><td><code>rogue blowup &lt;p&gt; &lt;t&gt;</code></td><td>Supercritical blow-up run (p=7 default)</td></tr>
+        <tr><td><code>rogue soliton &lt;t&gt;</code></td><td>Soliton walk</td></tr>
+        <tr><td><code>rogue fiber &lt;t&gt;</code></td><td>Fiber-optic diagnostics</td></tr>
+      </table>
+
+      <div class="note">Every run is <strong>seeded</strong> and <strong>reproducible</strong>. Re-run the same input and you get identical output — important for audit.</div>
+
+      <h2 id="production">Production mode</h2>
+      <p>Production mode takes real, dimensional sea-state observations and runs the physical NLS forecast bridge. Input is a <strong>CSV or TSV</strong> with <code>t, hs, tp</code> (optional <code>gamma</code>).</p>
+
+      <table>
+        <tr><th>Column</th><th>Aliases</th><th>Required</th></tr>
+        <tr><td>t</td><td><code>time</code>, <code>timestamp</code>, <code>t_s</code></td><td>Yes</td></tr>
+        <tr><td>hs</td><td><code>Hs</code>, <code>significant_wave_height</code></td><td>Yes (must be &gt;0)</td></tr>
+        <tr><td>tp</td><td><code>Tp</code>, <code>peakperiod</code></td><td>Yes (must be &gt;0)</td></tr>
+        <tr><td>gamma</td><td>JONSWAP peak enhancement</td><td>No (default 3.3)</td></tr>
+      </table>
+
+      <p>The physical bridge derives:</p>
+      <pre><code>
+Carrier frequency:  ω₀ = 2π / Tp
+Wave number:       k₀ = ω₀² / g          (deep-water dispersion)
+Dispersion:        β  = ω₀ / (8 k₀²)      [m²/s]
+Nonlinearity:      γ  = ω₀ k₀² / 2        [/m·s]
+Amplitude:         A  = Hs / 4
+Steepness:         2A k₀
+      </code></pre>
+
+      <h3>Output</h3>
+      <p>Each observation produces a forecast with:</p>
+      <ul>
+        <li><strong>Max crest factor</strong> — in units of σ (≥ 2.2 = rogue)</li>
+        <li><strong>Risk level</strong> — normal / elevated / high / severe</li>
+        <li><strong>Rogue events</strong> — time, position, crest factor, Hs in metres</li>
+        <li><strong>Conservation</strong> — mass / momentum / energy at final step</li>
+      </ul>
+
+      <h2 id="instruments">Connecting instruments</h2>
+      <p>Any system that produces sea-state data can feed Rogue:</p>
+
+      <h3>Streaming feed</h3>
+      <pre><code># Buoy / AIS / bridge writes observations to a rolling CSV
+echo "0,4.0,11.0,3.3" > /var/feed/current.csv
+rogue predict /var/feed/current.csv --json >> /var/log/rogue-alerts.json</code></pre>
+
+      <h3>Loop / cron</h3>
+      <pre><code># Poll every 60 seconds — good for buoys, met stations
+watch -n 60 'rogue predict /dev/stdin --json < /var/feed/current.csv'</code></pre>
+
+      <h3>WebSocket bridge (advanced)</h3>
+      <pre><code># Pipe streaming data through a lightweight WS server
+socat TCP-LISTEN:8080,fork EXEC:'./rogue predict --json /dev/stdin'</code></pre>
+
+      <h3>Audit replay</h3>
+      <p>Because Rogue is deterministic and seeded, replaying historical AIS / buoy logs produces <strong>identical</strong> alerts — critical for insurance, incident review, and regulatory compliance.</p>
+
+      <h2 id="web">Web dashboard</h2>
+      <h3>Education mode</h3>
+      <p>Live interactive NLS simulation at <code>/education</code>. Explore six scenarios:</p>
+      <ul>
+        <li><strong>Akhmediev breather</strong> — periodic modulation that amplifies sidebands</li>
+        <li><strong>Peregrine soliton</strong> — a single peak that "appears from nowhere and disappears without a trace"</li>
+        <li><strong>JONSWAP random sea</strong> — realistic ocean spectrum with rogue candidates</li>
+        <li><strong>Stokes + sidebands</strong> — Benjamin–Feir lab setup</li>
+        <li><strong>Soliton walk</strong> — stable solitary wave propagation</li>
+        <li><strong>Quintic blow-up</strong> — supercritical NLS with finite-time singularity</li>
+      </ul>
+      <p>Controls: resolution (256→1024 grid points), speed multiplier (1×–8×), pause/reset. The canvas renders |ψ|² in real time with diagnostics — mass, momentum, energy, H¹ seminorm, kurtosis, and blow-up ETA.</p>
+
+      <h3>Production mode</h3>
+      <p>At <code>/production</code>, enter a real sea state (<code>Hs</code>, <code>Tp</code>, peak γ) and get a physical, dimensionality-correct forecast running in your browser via WASM. Same engine as the CLI — no server round-trip.</p>
+
+      <h3>WASM size</h3>
+      <p>The browser bundle is <strong>262 kB</strong> (gzipped: ~98 kB). The hard constraint is ≤ 8 MB — verified at every build.</p>
+
+      <h2 id="download">Download</h2>
+      <p>Pre-built binaries for <strong>Linux x86-64</strong> are attached to every <a href="https://github.com/jesedv/rogue/releases" class="gold-text">GitHub Release</a>. macOS and Windows binaries coming via CI.</p>
+      <pre><code>curl -L https://github.com/jesedv/rogue/releases/download/v0.1.0/rogue -o rogue
+chmod +x rogue
+sudo mv rogue /usr/local/bin/
+rogue predict sea.csv</code></pre>
+      <p>The crates are published on <a href="https://crates.io/crates/rogue-nls" class="gold-text">crates.io</a> — Rust users can also <code>cargo install</code>.</p>
+
+      <h2 id="contributing">Contributing</h2>
+      <p>Contributions welcome. Fork <a href="https://github.com/jesedv/rogue" class="gold-text">github.com/jesedv/rogue</a>, branch from <code>main</code>, and send a PR.</p>
+      <p>Before pushing:</p>
+      <pre><code>./dev check              # cargo check + cargo test --workspace
+./dev regress            # physics regression suite
+./dev regress-prod       # production CSV intake regression</code></pre>
+      <p>Free software (<a href="https://github.com/jesedv/rogue/blob/main/LICENSE" class="gold-text">MIT</a>).</p>
+    </main>
+
+    <footer>
+      <a href="/">rogue.jesed.dev</a> ·
+      <a href="https://github.com/jesedv/rogue">GitHub</a> ·
+      <a href="https://jesed.dev">jesed.dev</a>
+    </footer>
+  </body>
+</html>

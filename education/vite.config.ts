@@ -13,6 +13,8 @@ export default defineConfig({
           req.url = "/education.html";
         } else if (req.url! === "/production" || req.url!.startsWith("/production/")) {
           req.url = "/production.html";
+        } else if (req.url! === "/docs" || req.url!.startsWith("/docs/")) {
+          req.url = "/docs.html";
         } else if (req.url! === "/") {
           req.url = "/index.html";
         }
@@ -29,6 +31,7 @@ export default defineConfig({
         index: new URL("./index.html", import.meta.url).pathname,
         education: new URL("./education.html", import.meta.url).pathname,
         production: new URL("./production.html", import.meta.url).pathname,
+        docs: new URL("./docs.html", import.meta.url).pathname,
       },
     },
   },
