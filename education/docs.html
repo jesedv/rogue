@@ -201,7 +201,7 @@ rogue predict /var/feed/current.csv --json >> /var/log/rogue-alerts.json</code><
 
       <h3>Loop / cron</h3>
       <pre><code># Poll every 60 seconds — good for buoys, met stations
-watch -n 60 'rogue predict /dev/stdin --json < /var/feed/current.csv'</code></pre>
+watch -n 60 'rogue predict /dev/stdin --json &lt; /var/feed/current.csv'</code></pre>
 
       <h3>WebSocket bridge (advanced)</h3>
       <pre><code># Pipe streaming data through a lightweight WS server
