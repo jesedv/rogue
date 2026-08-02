@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rogue — education · blow-up &amp; rogue-wave predictor</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #06070b;
+        --panel: #11131b;
+        --accent: #3db8ff;
+        --warn: #ffb03d;
+        --danger: #ff5d5d;
+        --text: #e8eaf0;
+        --muted: #8b90a0;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 13px/1.4 "IBM Plex Sans", "Segoe UI", system-ui, sans-serif; }
+      header { padding: 12px 16px; border-bottom: 1px solid #1e2230; background: var(--panel); display: flex; gap: 16px; align-items: center; }
+      header a { color: var(--accent); text-decoration: none; font-size: 13px; }
+      header .brand { font-weight: 700; letter-spacing: .05em; }
+      #app { display: grid; grid-template-columns: 280px 1fr; height: calc(100% - 46px); }
+      aside { background: var(--panel); border-right: 1px solid #1e2230; padding: 16px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
+      h1 { font-size: 18px; margin: 0; letter-spacing: 0.04em; }
+      h1 span { color: var(--accent); }
+      .muted { color: var(--muted); font-size: 11px; }
+      label { display: flex; flex-direction: column; gap: 4px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+      select, input[type="range"], button { font: inherit; color: var(--text); background: #1a1d28; border: 1px solid #2a2f40; border-radius: 6px; padding: 8px 10px; }
+      button { cursor: pointer; background: linear-gradient(180deg, #2a3144, #1c2030); }
+      button:hover { border-color: var(--accent); }
+      button.primary { background: linear-gradient(180deg, #5cc2ff, #1f7fd0); color: #05121f; border: none; font-weight: 600; }
+      #stats { font-family: ui-monospace, monospace; font-size: 11px; color: var(--muted); white-space: pre-wrap; }
+      #eta { color: var(--muted); }
+      #eta.warn { color: var(--warn); font-weight: 600; }
+      #eta.danger { color: var(--danger); font-weight: 700; }
+      main { position: relative; overflow: hidden; background: #000; }
+      canvas { width: 100%; height: 100%; display: block; }
+      .hint { position: absolute; left: 16px; bottom: 16px; color: var(--muted); pointer-events: none; font-size: 12px; }
+      .kurt { color: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/">&larr; home</a>
+      <span class="brand">ROGUE</span>
+      <span class="muted">education — blow-up &amp; rogue-wave predictor</span>
+    </header>
+    <div id="app">
+      <aside>
+        <div>
+          <h1>ROGUE <span>//</span></h1>
+          <div class="muted">blow-up &amp; rogue-wave predictor</div>
+        </div>
+        <label>
+          Scenario
+          <select id="scenario">
+            <option value="akhmediev">Akhmediev breather</option>
+            <option value="peregrine">Peregrine soliton</option>
+            <option value="ocean" selected>JONSWAP random sea</option>
+            <option value="stokes">Stokes + sidebands</option>
+            <option value="soliton">Soliton walk</option>
+            <option value="blowup">Quintic blow-up</option>
+          </select>
+        </label>
+        <label>
+          Resolution
+          <select id="res">
+            <option value="256">256</option>
+            <option value="512" selected>512</option>
+            <option value="1024">1024</option>
+          </select>
+        </label>
+        <label>
+          Speed <span id="speedVal">1×</span>
+          <input id="speed" type="range" min="1" max="8" step="1" value="1" />
+        </label>
+        <button id="reset" class="primary">Reset</button>
+        <button id="pause">Pause</button>
+        <div id="eta"></div>
+        <div id="stats">loading wasm…</div>
+        <div class="muted" style="margin-top:auto">split-step NLS · Strang symplectic · seeded</div>
+        <a href="/production.html" style="color:var(--accent);text-decoration:none;font-size:12px">production forecast →</a>
+      </aside>
+      <main>
+        <canvas id="c"></canvas>
+        <div class="hint">|ψ| field — cyan = sea level, white = rogue crest</div>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

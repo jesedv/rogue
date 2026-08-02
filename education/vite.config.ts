@@ -15,6 +15,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: new URL("./index.html", import.meta.url).pathname,
+        education: new URL("./education.html", import.meta.url).pathname,
         production: new URL("./production.html", import.meta.url).pathname,
       },
     },

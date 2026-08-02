@@ -3,82 +3,238 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rogue — blow-up &amp; rogue-wave predictor</title>
+    <title>Rogue — forecast extreme wave events</title>
     <style>
       :root {
-        color-scheme: dark;
-        --bg: #06070b;
-        --panel: #11131b;
-        --accent: #3db8ff;
-        --warn: #ffb03d;
-        --danger: #ff5d5d;
-        --text: #e8eaf0;
-        --muted: #8b90a0;
+        color-scheme: light;
+        --bg: #eef7f6;
+        --white: #ffffff;
+        --ocean-900: #062a2b;
+        --ocean-700: #0d4a4a;
+        --ocean-500: #1f7a72;
+--green: #1f9d68;
+      --green-400: #27c48a;
+      --gold: #d9a832;
+        --text: #173b3b;
+        --muted: #5b7a7a;
+        --line-c: #d7e7e5;
       }
       * { box-sizing: border-box; }
-      html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 13px/1.4 "IBM Plex Sans", "Segoe UI", system-ui, sans-serif; }
-      #app { display: grid; grid-template-columns: 280px 1fr; height: 100%; }
-      aside { background: var(--panel); border-right: 1px solid #1e2230; padding: 16px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
-      h1 { font-size: 18px; margin: 0; letter-spacing: 0.04em; }
-      h1 span { color: var(--accent); }
-      .muted { color: var(--muted); font-size: 11px; }
-      label { display: flex; flex-direction: column; gap: 4px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
-      select, input[type="range"], button { font: inherit; color: var(--text); background: #1a1d28; border: 1px solid #2a2f40; border-radius: 6px; padding: 8px 10px; }
-      button { cursor: pointer; background: linear-gradient(180deg, #2a3144, #1c2030); }
-      button:hover { border-color: var(--accent); }
-      button.primary { background: linear-gradient(180deg, #5cc2ff, #1f7fd0); color: #05121f; border: none; font-weight: 600; }
-      #stats { font-family: ui-monospace, monospace; font-size: 11px; color: var(--muted); white-space: pre-wrap; }
-      #eta { color: var(--muted); }
-      #eta.warn { color: var(--warn); font-weight: 600; }
-      #eta.danger { color: var(--danger); font-weight: 700; }
-      main { position: relative; overflow: hidden; background: #000; }
-      canvas { width: 100%; height: 100%; display: block; }
-      .hint { position: absolute; left: 16px; bottom: 16px; color: var(--muted); pointer-events: none; font-size: 12px; }
-      .kurt { color: var(--accent); }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 16px/1.65 "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+      }
+      .wrap { max-width: 920px; margin: 0 auto; padding: 0 22px; }
+
+      header.hero {
+        background: linear-gradient(160deg, #062a2b 0%, #0a3f3f 55%, #145a52 100%);
+        color: #eaf7f3;
+        padding: 72px 0 56px;
+      }
+      header.hero .mast { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+      .brand { font-size: 30px; font-weight: 700; letter-spacing: .06em; color: var(--white); }
+      .brand span { color: var(--green-400); }
+      .tag { font-size: 13px; letter-spacing: .04em; color: #bcdcd6; }
+      .hero h1 { font-size: 42px; line-height: 1.1; margin: 34px 0 14px; color: var(--white); }
+      .hero h1 em { font-style: normal; color: var(--green-400); }
+      .hero p.lead { font-size: 19px; max-width: 640px; color: #cfe8e3; margin: 0 0 30px; }
+      .cta { display: flex; flex-wrap: wrap; gap: 14px; }
+      .btn {
+        display: inline-block; text-decoration: none; font-weight: 700;
+        padding: 13px 22px; border-radius: 10px; font-size: 15px;
+        border: 1px solid transparent; cursor: pointer;
+      }
+      .btn.green { background: linear-gradient(180deg, #27c48a, #15955f); color: #042019; }
+      .btn.gold { background: transparent; border-color: rgba(217,168,64,.55); color: #f4ddb0; }
+      .btn.ghost { background: var(--white); color: var(--ocean-900); border-color: var(--line-c); }
+
+      section { padding: 44px 0; }
+      nav.menu {
+        margin-top: 40px; display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;
+      }
+      .menu-card {
+        background: var(--white); border: 1px solid var(--line-c); border-radius: 14px;
+        padding: 22px 24px; text-decoration: none; color: var(--text);
+        transition: transform .05s ease, border-color .15s ease;
+      }
+      .menu-card:hover { border-color: var(--green-400); transform: translateY(-2px); }
+      .menu-card h3 { margin: 0 0 6px; font-size: 19px; }
+      .menu-card .go { color: var(--green-400); font-weight: 700; }
+      .badge { display:inline-block; font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+        padding:2px 8px; border-radius:999px; font-weight:700; margin-bottom:10px; }
+      .badge.edu { background:#e2f4ea; color:#1f7a3c; }
+      .badge.pro { background:#f7ead2; color:#9a6a10; }
+
+      h2 {
+        font-size: 26px; color: var(--ocean-900); margin: 0 0 8px;
+        display: flex; align-items: center; gap: 12px;
+      }
+      h2::before { content: ""; width: 8px; height: 26px; border-radius: 4px; background: linear-gradient(var(--green-400), var(--ocean-500)); }
+      .sec-sub { color: var(--muted); margin: 0 0 24px; font-size: 14px; }
+      .muted { color: var(--muted); }
+
+      .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+      .tile { background: var(--white); border: 1px solid var(--line-c); border-radius: 12px; padding: 18px; }
+      .tile h4 { margin: 0 0 6px; color: var(--ocean-700); }
+      .tile p { margin: 0; font-size: 14px; color: var(--muted); }
+
+      .why { background: var(--white); border: 1px solid var(--line-c); border-left: 5px solid var(--green-400); border-radius: 12px; padding: 20px 24px; margin: 12px 0; }
+      .why strong { color: var(--ocean-700); }
+
+      .params table { width: 100%; border-collapse: collapse; background: var(--white); border: 1px solid var(--line-c); border-radius: 12px; overflow: hidden; font-size: 15px; }
+      .params th, .params td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line-c); vertical-align: top; }
+      .params th { background: #1c5450; color: #eafbf3; font-size: 13px; letter-spacing: .05em; text-transform: uppercase; }
+      .params tr:last-child td { border-bottom: none; }
+      .params td code { background: #e5f1ee; color: var(--ocean-700); padding: 2px 7px; border-radius: 6px; font-size: 13px; }
+      .params td p { margin: 0; }
+
+      ol.steps { counter-reset: s; list-style: none; padding: 0; }
+      ol.steps li { counter-increment: s; position: relative; padding: 0 0 16px 46px; }
+      ol.steps li::before {
+        content: counter(s); position: absolute; left: 0; top: 0;
+        width: 32px; height: 32px; border-radius: 50%;
+        background: linear-gradient(var(--green-400), var(--ocean-500)); color: #042019;
+        font-weight: 700; display: flex; align-items: center; justify-content: center;
+      }
+      ol.steps b { color: var(--ocean-900); }
+
+      footer { border-top: 1px solid var(--line-c); background: var(--white); padding: 26px 0; color: var(--muted); font-size: 13px; }
+      footer .muted { margin: 2px 0; }
+      .gold-text { color: var(--gold); font-weight: 700; }
     </style>
   </head>
   <body>
-    <div id="app">
-      <aside>
-        <div>
-          <h1>ROGUE <span>//</span></h1>
-          <div class="muted">blow-up &amp; rogue-wave predictor</div>
+    <header class="hero">
+      <div class="wrap">
+        <div class="mast">
+          <div class="brand">ROGUE<span>.</span></div>
+          <div class="tag">finite-time blow-up &amp; rogue-wave predictor</div>
         </div>
-        <label>
-          Scenario
-          <select id="scenario">
-            <option value="akhmediev">Akhmediev breather</option>
-            <option value="peregrine">Peregrine soliton</option>
-            <option value="ocean" selected>JONSWAP random sea</option>
-            <option value="stokes">Stokes + sidebands</option>
-            <option value="soliton">Soliton walk</option>
-            <option value="blowup">Quintic blow-up</option>
-          </select>
-        </label>
-        <label>
-          Resolution
-          <select id="res">
-            <option value="256">256</option>
-            <option value="512" selected>512</option>
-            <option value="1024">1024</option>
-          </select>
-        </label>
-        <label>
-          Speed <span id="speedVal">1×</span>
-          <input id="speed" type="range" min="1" max="8" step="1" value="1" />
-        </label>
-        <button id="reset" class="primary">Reset</button>
-        <button id="pause">Pause</button>
-        <div id="eta"></div>
-        <div id="stats">loading wasm…</div>
-        <div class="muted" style="margin-top:auto">split-step NLS · Strang symplectic · seeded</div>
-        <a href="/production.html" style="color:var(--accent);text-decoration:none;font-size:12px">production forecast →</a>
-      </aside>
-      <main>
-        <canvas id="c"></canvas>
-        <div class="hint">|ψ| field — cyan = sea level, white = rogue crest</div>
-      </main>
-    </div>
-    <script type="module" src="/src/main.ts"></script>
+        <h1>Forecast the wave<br />that <em>appears from nowhere</em>.</h1>
+        <p class="lead">
+          Rogue waves are extreme ocean events — 2.2× or more the surrounding
+          wave height — that build without warning and vanish without a trace.
+          We detect them in real time from the mathematics of finite-time
+          blow-up in supercritical defocusing, using a symplectic
+          nonlinear-Schrödinger solver instead of heuristics.
+        </p>
+        <div class="cta">
+          <a class="btn green" href="/education.html">Explore the physics</a>
+          <a class="btn gold" href="/production.html">Try a real sea forecast</a>
+        </div>
+      </div>
+    </header>
+
+    <section id="menu">
+      <div class="wrap">
+        <h2>Choose your window</h2>
+        <p class="sec-sub">Two interfaces, one engine. Both run the same NLS core in your browser.</p>
+        <nav class="menu">
+          <a class="menu-card" href="/education.html">
+            <span class="badge edu">interactive</span>
+            <h3>Education dashboard</h3>
+            <p class="muted">Watch Akhmediev breathers, Peregrine solitons and JONSWAP seas evolve live. Tune resolution, speed and scenarios.</p>
+            <span class="go">Open education →</span>
+          </a>
+          <a class="menu-card" href="/production.html">
+            <span class="badge pro">forecast</span>
+            <h3>Production forecast</h3>
+            <p class="muted">Enter a real sea state (Hs, Tp, γ) and get a physical, dimensionality-correct blow-up and rogue assessment.</p>
+            <span class="go">Open production →</span>
+          </a>
+        </nav>
+      </div>
+    </section>
+
+    <section id="why">
+      <div class="wrap">
+        <h2>Why this exists</h2>
+        <p class="sec-sub">The problem no statistical model can solve.</p>
+        <div class="why"><strong>$2B+ / year</strong> in shipping damage, <strong>~100 cruise-ship deaths / yr</strong>, offshore-platform damage, submarine-cable outages and wind-turbine failure — all from a few minutes of rogue-wave energy.</div>
+        <div class="why">Today's tools are <strong>WAVEWATCH III / SWAN</strong> (spectral, no individual waves), <strong>CFD</strong> (accurate but far too slow for real time) and <strong>Rayleigh statistics</strong> (systematically underestimate extremes).</div>
+        <div class="why">Rogue sits on the 2026 Breakthrough-Prize mathematics of <strong>finite-time blow-up in supercritical defocusing NLS</strong> (Merle–Raphael–Rodnianski–Szeftel) to flag the precise moment a field is about to concentrate — directly, in real time.</div>
+      </div>
+    </section>
+
+    <section id="use">
+      <div class="wrap">
+        <h2>How to use it</h2>
+        <p class="sec-sub">No install. No browser of heavy setup. Just press go.</p>
+        <ol class="steps">
+          <li><b>Pick a window</b> — the interactive <b>education</b> playground or the real-data <b>production</b> forecast. Or run the same engine from the CLI and scripts.</li>
+          <li><b>Set the state</b> — choose a scenario and resolution, or type a real sea state (Hs, Tp, peak γ) for a physical forecast.</li>
+          <li><b>Run &amp; watch</b> — the wasm solver integrates the field with a symplectic scheme; cast-colored crest factors and a risk label appear.</li>
+          <li><b>Interpret</b> — <code>&lt;</code> 2.2 σ is everyday, ≥ 2.2 σ is rogue territory, flags bless blow-up.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="params">
+      <div class="wrap">
+        <h2>The parameters</h2>
+        <p class="sec-sub">What the knobs mean, and the equations behind them.</p>
+        <div class="params">
+          <table>
+            <tr><th>Parameter</th><th>Meaning</th><th>Where</th></tr>
+            <tr>
+              <td><code>p</code></td>
+              <td>Nonlinear exponent in <code>i∂tψ = −(β₂/2)∇²ψ + γ|ψ|<sup>p−1</sup>ψ</code>. Supercritical (<b>p &gt; 5</b>) admits finite-time blow-up.</td>
+              <td>edu · blow-up</td>
+            </tr>
+            <tr>
+              <td><code>β₂</code></td>
+              <td>Dispersion coefficient (m²/s in production, tuned by sea state).</td>
+              <td>solver</td>
+            </tr>
+            <tr>
+              <td><code>γ</code></td>
+              <td>Nonlinearity — JONSWAP spectrum peak in production, constant in edu.</td>
+              <td>prod + edu</td>
+            </tr>
+            <tr>
+              <td><code>Hs</code></td>
+              <td>Significant wave height (m). Drives amplitude <code>A = Hs/4</code>.</td>
+              <td>production</td>
+            </tr>
+            <tr>
+              <td><code>Tp</code></td>
+              <td>Peak period (s). Sets deep-water <code>ω₀ = 2π/Tp</code> and wave number <code>k₀ = ω₀²/g</code>.</td>
+              <td>production</td>
+            </tr>
+            <tr>
+              <td><code>resolution</code></td>
+              <td>Grid size (256→1024). More points, finer crests, slower run.</td>
+              <td>education</td>
+            </tr>
+            <tr>
+              <td><code>speed</code></td>
+              <td>Time integrator speed multiplier for the education view.</td>
+              <td>education</td>
+            </tr>
+            <tr>
+              <td><code>seed</code></td>
+              <td>Randomness for the random-sea field, so every run is reproducible.</td>
+              <td>both</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <div class="brand" style="font-size:18px">ROGUE<span>.</span></div>
+        <div class="muted">split-step NLS · Strang symplectic integrator · seeded &amp; reproducible</div>
+        <div class="muted">Built on Merle–Raphael–Rodnianski–Szeftel (2026) · Akhmediev breathers · Peregrine solitons · Benjamin–Feir instability.</div>
+      </div>
+    </footer>
+    <nav class="muted" style="text-align:center;padding:14px">
+      <a href="/education.html" class="gold-text" style="margin-right:16px">education</a>
+      <a href="/production.html" class="gold-text">production</a>
+    </nav>
   </body>
 </html>
