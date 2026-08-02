@@ -289,3 +289,20 @@ pub fn production_forecast_js(hs: f64, tp: f64, gamma: f64, seed: u32) -> JsValu
 pub fn production_forecast(hs: f64, tp: f64, gamma: f64, seed: u32) -> JsValue {
     production_forecast_js(hs, tp, gamma, seed)
 }
+
+/// Lighter grid for the browser demo so a click returns in well under a
+/// second: fewer carriers per box and a shorter integration horizon but the
+/// same physical scaling math.
+#[wasm_bindgen]
+pub fn production_forecast_quick(hs: f64, tp: f64, gamma: f64, seed: u32) -> JsValue {
+    use rogue_production::Observation;
+    let obs = Observation { t: 0.0, hs, tp, gamma };
+    let cfg = rogue_production::ForecastConfig {
+        ppw: 32,
+        box_lambdas: 6.0,
+        forecast_periods: 20.0,
+        rogue_threshold: 2.2,
+    };
+    let f = rogue_production::forecast_observation(&obs, &cfg, seed as u64);
+    serde_wasm_bindgen::to_value(&f).unwrap_or(JsValue::NULL)
+}
